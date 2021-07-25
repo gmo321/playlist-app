@@ -3,26 +3,31 @@ package ui;
 import model.Song;
 import model.Playlist;
 
+import java.util.Iterator;
 import java.util.Scanner;
 
 // UI Functionality and methods are implemented from Teller App. Link below:
 // https://github.students.cs.ubc.ca/CPSC210/TellerApp
 // Playlist application
 public class PlaylistApp {
-    private Playlist list;
-    private Song title;
+    private Playlist playlist;
+    private Song song;
     private Scanner input;
+    Iterator<Song> iterator = playlist.iterator();
 
-    //EFFECTS: runs the to do application
+
+    //EFFECTS: Runs the playlist application
     public PlaylistApp() {
         runPlaylist();
     }
 
+    // MODIFIES: this
+    // EFFECTS: processes user input
     private void runPlaylist() {
         boolean keepGoing = true;
         String command = null;
 
-        init();
+        initialize();
 
         while (keepGoing) {
             displayMenu();
@@ -42,19 +47,26 @@ public class PlaylistApp {
     private void processCommand(String command) {
         if (command.equals("add")) {
             addSong();
-        } else if (command.equals("delete")) {
+        } else if (command.equals("remove")) {
             removeSong();
-        } else if (command.equals("complete")) {
-            displayPlaylist();
+        } else if (command.equals("show songs")) {
+            printPlaylist();
+        } else if (command.equals("next")) {
+            playNext();
+        } else if (command.equals("prev")) {
+            playPrev();
+        } else if (command.equals("replay")) {
+            replay();
         } else {
             System.out.println("Please try again");
         }
     }
 
     // MODIFIES: this
-    // EFFECTS: initializes To-Do list
+    // EFFECTS: initializes Playlist
     private void initialize() {
-        list = new Playlist();
+        playlist = new Playlist();
+        song = new Song("test song", "test artist", 1.0);
         input = new Scanner(System.in);
     }
 
@@ -63,49 +75,71 @@ public class PlaylistApp {
         System.out.println("\nSelect from:");
         System.out.println("\tadd -> add song");
         System.out.println("\tremove -> remove song");
-        System.out.println("\tshow -> show all songs");
+        System.out.println("\tshow songs-> show all songs");
         System.out.println("\tnext -> play next song");
         System.out.println("\tprev -> play previous song");
         System.out.println("\treplay -> replay current song");
-        System.out.println("\tskip -> skip current song");
     }
 
     // MODIFIES: this
     // EFFECTS: adds a new song to the playlist
     private void addSong() {
+        System.out.println("Enter song name to add: ");
+        String title = input.next();
 
+        if (!playlist.isAlreadyInPlaylist(song)) {
+            playlist.addSong(song);
+        } else {
+            System.out.println("Song is already in playlist...");
+        }
     }
 
     // MODIFIES: this
     // EFFECTS: removes song from the playlist
     private void removeSong() {
+        System.out.println("Enter song name to remove: ");
+        String title = input.next();
 
+        if (playlist.isAlreadyInPlaylist(song)) {
+            playlist.removeSong(song);
+        } else {
+            System.out.println("Song is not in the playlist yet...");
+        }
     }
 
-    // EFFECTS: shows all songs of the playlist
-    private void displayPlaylist() {
-
-    }
 
     // EFFECTS: plays next song on playlist
     private void playNext() {
-
+        if (iterator.hasNext()) {
+            System.out.println("Now playing " + playlist.playNext().toString());
+        } else {
+            System.out.println("The playlist has ended. Please add more songs.");
+        }
     }
 
-    // EFFECTS: plays previous song on playlist
-    private void playPrev() {
+        // EFFECTS: plays previous song on playlist
+        private void playPrev() {
+        if (playlist.it
+            System.out.println("Now playing " + playlist.playPrev().toString());
 
+        }
+
+        // EFFECTS: replays current song on playlist
+        private void replay() {
+            System.out.println("Now playing " + playlist.replay().toString());
+
+        }
+
+        // EFFECTS: shows all songs of the playlist
+        private void printPlaylist() {
+            System.out.println("Playlist: ");
+
+            //  Iterator<Song> s = playlist.iterator();
+            while (iterator.hasNext()) {
+                System.out.println(iterator.next());
+            }
+        }
     }
-
-    // EFFECTS: replays current song on playlist
-    private void replay() {
-
-    }
-
-    // EFFECTS: skips song on playlist
-    private void skip() {
-
-    }
-
-
 }
+
+

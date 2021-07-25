@@ -9,7 +9,6 @@ Some features will include:
  - displaying a list of the songs
  - playing the next song
  - playing previous song
- - skipping song
  - replaying current song
 This application will be useful for music lovers who love creating playlists of their favourite songs or songs of 
 similar genres.
@@ -24,4 +23,3 @@ about to accomplish!
 - As a user, I want to be able to play the next song of my playlist
 - As a user, I want to be able to play the previous song of my playlist
 - As a user, I want to be able to replay the current song of my playlist
-- As a user, I want to be able to skip the current song of my playlist

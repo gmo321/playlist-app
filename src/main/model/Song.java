@@ -13,18 +13,22 @@ public class Song {
         this.duration = duration;
     }
 
+    // EFFECTS: returns title of song
     public String getTitle() {
         return title;
     }
 
+    // EFFECTS: returns artist of song
     public String getArtist() {
         return artist;
     }
 
+    // EFFECTS: returns duration of song
     public double getDuration() {
         return duration;
     }
 
+    //EFFECTS: returns a string representation of song title, artist, and duration
     @Override
     public String toString() {
         return "Song{"
