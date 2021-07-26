@@ -33,6 +33,7 @@ class PlaylistTest {
         testPlaylist.addSong(s2);
         assertTrue(testPlaylist.isAlreadyInPlaylist(s1));
         assertFalse(testPlaylist.isAlreadyInPlaylist(new Song("test", "test", 5)));
+        assertFalse(testPlaylist.addSong(s1));
     }
 
     @Test
@@ -57,7 +58,7 @@ class PlaylistTest {
         testPlaylist.addSong(s1);
         testPlaylist.addSong(s2);
         testPlaylist.addSong(s2);
-        assertEquals()
+        assertEquals(s1, testPlaylist.playPrev());
     }
 
     @Test
@@ -83,4 +84,5 @@ class PlaylistTest {
         testPlaylist.addSong(s1);
         assertFalse(testPlaylist.isEmpty());
     }
+
 }

@@ -117,29 +117,27 @@ public class PlaylistApp {
         }
     }
 
-        // EFFECTS: plays previous song on playlist
-        private void playPrev() {
-        if (playlist.it
-            System.out.println("Now playing " + playlist.playPrev().toString());
+    // EFFECTS: plays previous song on playlist
+    private void playPrev() {
+        System.out.println("Now playing " + playlist.playPrev().toString());
+    }
 
-        }
+    // EFFECTS: replays current song on playlist
+    private void replay() {
+        System.out.println("Now playing " + playlist.replay().toString());
 
-        // EFFECTS: replays current song on playlist
-        private void replay() {
-            System.out.println("Now playing " + playlist.replay().toString());
+    }
 
-        }
+    // EFFECTS: shows all songs of the playlist
+    private void printPlaylist() {
+        System.out.println("Playlist: ");
 
-        // EFFECTS: shows all songs of the playlist
-        private void printPlaylist() {
-            System.out.println("Playlist: ");
-
-            //  Iterator<Song> s = playlist.iterator();
-            while (iterator.hasNext()) {
-                System.out.println(iterator.next());
-            }
+        //  Iterator<Song> s = playlist.iterator();
+        while (iterator.hasNext()) {
+            System.out.println(iterator.next());
         }
     }
 }
+
 
 
