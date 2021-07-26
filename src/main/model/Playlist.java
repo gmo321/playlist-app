@@ -5,12 +5,16 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.ListIterator;
 
-//Represents a Playlist which user can add, remove, display songs
+// Methods are implemented with reference to Lab 5, link below:
+// https://github.students.cs.ubc.ca/CPSC210-2021S-T2/lab5_h5h3b
+// Methods are implemented with reference to IntergerSetIntersect starter, link below:
+// https://github.students.cs.ubc.ca/CPSC210/IntegerSetLecLab
+// Represents a Playlist which user can add, remove, display songs
 public class Playlist implements Iterable<Song> {
     private ArrayList<Song> playlist;
     private ListIterator<Song> iterator;
 
-
+    // EFFECTS: Arraylist called playlist with elements of object Song, uses listIterator interface
     public Playlist() {
         playlist = new ArrayList<Song>();
         iterator = playlist.listIterator();
@@ -18,19 +22,14 @@ public class Playlist implements Iterable<Song> {
 
     // MODIFIES: this
     // EFFECTS: If song is not already in playlist, add song to end of playlist and return true, false otherwise
-    public boolean addSong(Song song) {
-        if (!isAlreadyInPlaylist(song)) {
+    public void addSong(Song song) {
             playlist.add(song);
-            return true;
-        } else {
-            return false;
-        }
     }
 
     // MODIFIES: this
-    // EFFECTS: Removes song from playlist
+    // EFFECTS: If song is already in playlist, remove song from playlist and return true, false otherwise
     public void removeSong(Song song) {
-        playlist.remove(song);
+            playlist.remove(song);
     }
 
     // EFFECTS: Plays next song on playlist

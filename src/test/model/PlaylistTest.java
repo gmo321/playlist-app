@@ -18,6 +18,7 @@ class PlaylistTest {
         s1 = new Song("song1", "artist1", 1.0);
         s2 = new Song("song2", "artist2", 2.0);
         s3 = new Song("song3", "artist3", 3.0);
+        s4 = new Song("song4", "artist4", 4.0);
     }
 
 
@@ -31,9 +32,8 @@ class PlaylistTest {
         testPlaylist.addSong(s1);
         assertTrue(testPlaylist.isAlreadyInPlaylist(s1));
         testPlaylist.addSong(s2);
-        assertTrue(testPlaylist.isAlreadyInPlaylist(s1));
+        assertFalse(testPlaylist.isAlreadyInPlaylist(s3));
         assertFalse(testPlaylist.isAlreadyInPlaylist(new Song("test", "test", 5)));
-        assertFalse(testPlaylist.addSong(s1));
     }
 
     @Test
