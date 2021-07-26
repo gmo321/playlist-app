@@ -23,13 +23,13 @@ public class Playlist implements Iterable<Song> {
     // MODIFIES: this
     // EFFECTS: If song is not already in playlist, add song to end of playlist and return true, false otherwise
     public void addSong(Song song) {
-            playlist.add(song);
+        playlist.add(song);
     }
 
     // MODIFIES: this
     // EFFECTS: If song is already in playlist, remove song from playlist and return true, false otherwise
     public void removeSong(Song song) {
-            playlist.remove(song);
+        playlist.remove(song);
     }
 
     // EFFECTS: Plays next song on playlist
@@ -50,7 +50,7 @@ public class Playlist implements Iterable<Song> {
 
     // EFFECTS: Returns true if song title matches another song title already in playlist, false otherwise
     public boolean isAlreadyInPlaylist(Song s) {
-        for (Song song: playlist) {
+        for (Song song : playlist) {
             return song.getTitle().equals(s.getTitle());
         }
         return false;
