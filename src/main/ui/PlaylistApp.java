@@ -102,18 +102,21 @@ public class PlaylistApp {
         String title = input.next();
         System.out.println("Enter the artist of the song: "
                 + "");
+        String artist = input.next();
 
         Song newSong = new Song();
         if (playlist.removeSong(newSong)) {
             System.out.println(newSong.getTitle() + " was removed from the playlist.");
         } else {
-            System.out.println("Song is not in the playlist yet...");
+            System.out.println(newSong.getTitle() + "is not in the playlist yet...");
         }
     }
 
 
     // EFFECTS: Given the current song, plays the next song on playlist
     private void playNextSong() {
+        Song newSong = new Song();
+
         if (playlist.hasNextSong(song)) {
             System.out.println("Now playing " + playlist.playNext(song).toString());
         } else {

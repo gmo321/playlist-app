@@ -23,3 +23,5 @@ about to accomplish!
 - As a user, I want to be able to play the next song of my playlist
 - As a user, I want to be able to play the previous song of my playlist
 - As a user, I want to be able to replay the current song of my playlist
+- As a user, I want to be able to save my playlist to file
+- As a user, I want to be able to load my playlist from file

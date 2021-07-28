@@ -16,14 +16,10 @@ public class Song {
         this.duration = duration;
     }
 
+
     public Song (String title) {
         this.title = title;
         this.artist = "";
-    }
-
-    public Song (String artist) {
-        this.title = "";
-        this.artist = artist;
     }
 
 
