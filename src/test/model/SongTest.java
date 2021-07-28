@@ -4,11 +4,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class SongTest {
+class SongTest {
     private Song testSong;
     private Song s1;
     private Song s2;
     private Song s3;
+    private Song s4;
 
     @BeforeEach
     void setUp() {

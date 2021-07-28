@@ -24,47 +24,56 @@ class PlaylistTest {
 
     @Test
     void testConstructor() {
-
     }
 
     @Test
     void testAddSong() {
+        assertTrue(testPlaylist.addSong(s1));
+        assertTrue(testPlaylist.addSong(s2));
         testPlaylist.addSong(s1);
+        assertFalse(testPlaylist.addSong(s1));
         assertTrue(testPlaylist.isAlreadyInPlaylist(s1));
-        testPlaylist.addSong(s2);
-        assertFalse(testPlaylist.isAlreadyInPlaylist(s3));
-        assertFalse(testPlaylist.isAlreadyInPlaylist(new Song("test", "test", 5)));
+        assertTrue(testPlaylist.isAlreadyInPlaylist(s2));
+        assertTrue(testPlaylist.addSong(s3));
     }
 
     @Test
     void testRemoveSong() {
+        assertFalse(testPlaylist.removeSong(s1));
         testPlaylist.addSong(s1);
         testPlaylist.addSong(s2);
-        testPlaylist.removeSong(s2);
+        assertTrue(testPlaylist.removeSong(s2));
         assertFalse(testPlaylist.isAlreadyInPlaylist(s2));
+        assertTrue(testPlaylist.isAlreadyInPlaylist(s1));
     }
 
     @Test
     void testPlayNext() {
+        assertEquals(null, testPlaylist.playNext(s4));
         testPlaylist.addSong(s1);
         testPlaylist.addSong(s2);
-        testPlaylist.addSong(s2);
-        assertEquals(s1, testPlaylist.playNext());
-        assertEquals(s2, testPlaylist.playNext());
+        testPlaylist.addSong(s3);
+        assertEquals(s2, testPlaylist.playNext(s1));
+        assertEquals(s3, testPlaylist.playNext(s2));
     }
 
     @Test
     void testPlayPrev() {
+        assertEquals(null, testPlaylist.playPrev(s1));
         testPlaylist.addSong(s1);
         testPlaylist.addSong(s2);
-        testPlaylist.addSong(s2);
-        assertEquals(s1, testPlaylist.playPrev());
+        testPlaylist.addSong(s3);
+        assertEquals(s2, testPlaylist.playPrev(s3));
+        assertEquals(s1, testPlaylist.playPrev(s2));
     }
 
     @Test
     void testReplay() {
         testPlaylist.addSong(s1);
-        assertEquals(s1, testPlaylist.replay());
+        testPlaylist.addSong(s3);
+        assertEquals(s1, testPlaylist.replay(s1));
+        assertEquals(s3, testPlaylist.replay(s3));
+        assertEquals(null, testPlaylist.replay(s4));
     }
 
     @Test
@@ -85,4 +94,23 @@ class PlaylistTest {
         assertFalse(testPlaylist.isEmpty());
     }
 
+    @Test
+    void testHasNextSong() {
+        assertFalse(testPlaylist.hasNextSong(s1));
+        testPlaylist.addSong(s1);
+        testPlaylist.addSong(s2);
+        assertTrue(testPlaylist.hasNextSong(s1));
+        assertFalse(testPlaylist.hasNextSong(s2));
+        assertFalse(testPlaylist.hasNextSong(s3));
+    }
+
+    @Test
+    void testHasPrevSong() {
+        assertFalse(testPlaylist.hasPrevSong(s2));
+        testPlaylist.addSong(s1);
+        testPlaylist.addSong(s2);
+        assertTrue(testPlaylist.hasPrevSong(s2));
+        assertFalse(testPlaylist.hasPrevSong(s1));
+        assertFalse(testPlaylist.hasPrevSong(s4));
+    }
 }
