@@ -1,4 +1,4 @@
-# My First Personal Project
+# CPSC 210 Personal Project
 
 ## Playlist Application
 
@@ -10,6 +10,7 @@ Some features will include:
  - playing the next song
  - playing previous song
  - replaying current song
+ 
 This application will be useful for music lovers who love creating playlists of their favourite songs or songs of 
 similar genres.
 I wanted to make a Playlist application because I love listening to music for different types of tasks such as studying,

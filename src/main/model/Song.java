@@ -1,27 +1,21 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.Objects;
 
 // Represents a song which has a name, artist, and duration
-public class Song {
+public class Song implements Writable {
     private String title;              // a song title
     private String artist;             // the artist of the song
-    private double duration;           // the duration of the song
 
 
     // EFFECTS: Song is title of the song, artist of the song and duration of the song
-    public Song(String title, String artist, double duration) {
+    public Song(String title, String artist) {
         this.title = title;
         this.artist = artist;
-        this.duration = duration;
     }
-
-
-    public Song (String title) {
-        this.title = title;
-        this.artist = "";
-    }
-
 
     // EFFECTS: returns title of song
     public String getTitle() {
@@ -33,10 +27,6 @@ public class Song {
         return artist;
     }
 
-    // EFFECTS: returns duration of song
-    public double getDuration() {
-        return duration;
-    }
 
     //EFFECTS: returns a string representation of song title, artist, and duration
     @Override
@@ -47,9 +37,15 @@ public class Song {
                 +
                 ", artist='" + artist + '\''
                 +
-                ", duration=" + duration
-                +
                 '}';
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("title", title);
+        json.put("artist", artist);
+        return json;
     }
 }
 

@@ -1,9 +1,13 @@
 package ui;
 
-import model.Playlist;
+import java.io.FileNotFoundException;
 
 public class Main {
     public static void main(String[] args) {
-        new PlaylistApp();
+        try {
+            new PlaylistApp();
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to run application: file not found");
+        }
     }
 }

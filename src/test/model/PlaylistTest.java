@@ -3,6 +3,9 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Collections;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlaylistTest {
@@ -15,10 +18,10 @@ class PlaylistTest {
     @BeforeEach
     void setUp() {
         testPlaylist = new Playlist();
-        s1 = new Song("song1", "artist1", 1.0);
-        s2 = new Song("song2", "artist2", 2.0);
-        s3 = new Song("song3", "artist3", 3.0);
-        s4 = new Song("song4", "artist4", 4.0);
+        s1 = new Song("song1", "artist1");
+        s2 = new Song("song2", "artist2");
+        s3 = new Song("song3", "artist3");
+        s4 = new Song("song4", "artist4");
     }
 
 
@@ -49,31 +52,29 @@ class PlaylistTest {
 
     @Test
     void testPlayNext() {
-        assertEquals(null, testPlaylist.playNext(s4));
         testPlaylist.addSong(s1);
         testPlaylist.addSong(s2);
         testPlaylist.addSong(s3);
-        assertEquals(s2, testPlaylist.playNext(s1));
-        assertEquals(s3, testPlaylist.playNext(s2));
+        assertEquals(s2, testPlaylist.playNext());
+        assertEquals(s3, testPlaylist.playNext());
     }
 
     @Test
     void testPlayPrev() {
-        assertEquals(null, testPlaylist.playPrev(s1));
         testPlaylist.addSong(s1);
         testPlaylist.addSong(s2);
         testPlaylist.addSong(s3);
-        assertEquals(s2, testPlaylist.playPrev(s3));
-        assertEquals(s1, testPlaylist.playPrev(s2));
+        testPlaylist.playNext();
+        testPlaylist.playNext();
+        assertEquals(s2, testPlaylist.playPrev());
+        assertEquals(s1, testPlaylist.playPrev());
     }
 
     @Test
     void testReplay() {
         testPlaylist.addSong(s1);
         testPlaylist.addSong(s3);
-        assertEquals(s1, testPlaylist.replay(s1));
-        assertEquals(s3, testPlaylist.replay(s3));
-        assertEquals(null, testPlaylist.replay(s4));
+        assertEquals(s1, testPlaylist.replay());
     }
 
     @Test
@@ -112,5 +113,36 @@ class PlaylistTest {
         assertTrue(testPlaylist.hasPrevSong(s2));
         assertFalse(testPlaylist.hasPrevSong(s1));
         assertFalse(testPlaylist.hasPrevSong(s4));
+    }
+
+    @Test
+    void testPrintCurrentSong() {
+        testPlaylist.addSong(s1);
+        testPlaylist.addSong(s2);
+        assertEquals(s1, testPlaylist.getCurrentSong());
+        testPlaylist.addSong(s2);
+        assertEquals(s1, testPlaylist.getCurrentSong());
+    }
+
+//    //TODO
+//    @Test
+//    void testGetSongs() {
+//      //  assertEquals("[]", testPlaylist.getSongs());
+//        testPlaylist.addSong(s1);
+//        testPlaylist.addSong(s2);
+//        assertEquals(Collections.unmodifiableList(), testPlaylist.getSongs());
+//    }
+
+    @Test
+    void testNumSongs() {
+        assertEquals(0, testPlaylist.numSongs());
+        testPlaylist.addSong(s1);
+        testPlaylist.addSong(s2);
+        assertEquals(2, testPlaylist.numSongs());
+    }
+
+    @Test
+    void testToJson() {
+
     }
 }

@@ -1,0 +1,12 @@
+{
+  "playlist": [
+    {
+      "title": "song1",
+      "artist": "artist1",
+    },
+    {
+      "title": "song2",
+      "artist": "artist2"
+    }
+  ]
+}
