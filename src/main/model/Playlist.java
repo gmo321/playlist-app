@@ -52,18 +52,21 @@ public class Playlist implements Writable {
         return false;
     }
 
+    // REQUIRES: Song after current song
     // EFFECTS: Plays next song on playlist
     public Song playNext() {
         this.currentSong++;
         return playlist.get(currentSong);
     }
 
+    // REQUIRES: Song before current song
     // EFFECTS: Plays previous song on playlist
     public Song playPrev() {
         this.currentSong--;
         return playlist.get(currentSong);
     }
 
+    // REQUIRES: Song in playlist
     // EFFECTS: Replays current song on playlist
     public Song replay() {
         return playlist.get(currentSong);
@@ -107,9 +110,9 @@ public class Playlist implements Writable {
         return playlist.get(currentSong);
     }
 
-    // EFFECTS: Returns an unmodifiable list of songs in the playlist
+    // EFFECTS: Returns list of songs in the playlist
     public List<Song> getSongs() {
-        return Collections.unmodifiableList(playlist);
+        return playlist;
     }
 
     // EFFECTS: Returns the number of songs in the playlist

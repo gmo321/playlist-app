@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 // Tests are implemented with reference to JsonSerializationDemo, link below:
 // https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo

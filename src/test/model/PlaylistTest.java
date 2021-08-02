@@ -3,6 +3,8 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlaylistTest {
@@ -133,14 +135,14 @@ class PlaylistTest {
         assertEquals(s1, testPlaylist.getCurrentSong());
     }
 
-//    @Test
-//    void testGetSongs() {
-//      //  assertEquals("[]", testPlaylist.getSongs());
-//        testPlaylist.addSong(s1);
-//        testPlaylist.addSong(s2);
-//       assertEquals([s1], testPlaylist.getSongs());
-//        //this.testPlaylist.getSongs().getClass().getSimpleName().equals("UnmodifiableCollection");
-//    }
+    @Test
+    void testGetSongs() {
+        assertEquals(Arrays.asList(), testPlaylist.getSongs());
+        testPlaylist.addSong(s1);
+        testPlaylist.addSong(s2);
+        testPlaylist.addSong(s3);
+        assertEquals(Arrays.asList(s1,s2,s3), testPlaylist.getSongs());
+    }
 
     @Test
     void testNumSongs() {
@@ -149,25 +151,5 @@ class PlaylistTest {
         testPlaylist.addSong(s2);
         assertEquals(2, testPlaylist.numSongs());
     }
-
-    //@Test
-//    void testToJson() {
-//        testPlaylist.addSong(s1);
-//        testPlaylist.addSong(s2);
-//        assertEquals({
-//                "playlist": {
-//                    "artist": "artist1",
-//                    "title": "song1"
-//        },
-//        {
-//            "artist":"artist2",
-//                "title":"song2"}
-//                }, testPlaylist.toJson());
-//    }
-
-//    @Test
-//    void testPlaylistToJson() {
-//
-//    }
 
 }
