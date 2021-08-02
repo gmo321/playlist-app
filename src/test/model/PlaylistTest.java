@@ -3,9 +3,6 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Collections;
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlaylistTest {
@@ -124,13 +121,14 @@ class PlaylistTest {
         assertEquals(s1, testPlaylist.getCurrentSong());
     }
 
-//    //TODO
+    //TODO
 //    @Test
 //    void testGetSongs() {
 //      //  assertEquals("[]", testPlaylist.getSongs());
 //        testPlaylist.addSong(s1);
 //        testPlaylist.addSong(s2);
-//        assertEquals(Collections.unmodifiableList(), testPlaylist.getSongs());
+//       assertEquals([s1], testPlaylist.getSongs());
+//        //this.testPlaylist.getSongs().getClass().getSimpleName().equals("UnmodifiableCollection");
 //    }
 
     @Test
@@ -141,8 +139,4 @@ class PlaylistTest {
         assertEquals(2, testPlaylist.numSongs());
     }
 
-    @Test
-    void testToJson() {
-
-    }
 }

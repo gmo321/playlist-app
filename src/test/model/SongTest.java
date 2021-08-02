@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class SongTest {
-    private Song testSong;
     private Song s1;
     private Song s2;
     private Song s3;

@@ -3,7 +3,6 @@ package model;
 import org.json.JSONObject;
 import persistence.Writable;
 
-import java.util.Objects;
 
 // Represents a song which has a name, artist, and duration
 public class Song implements Writable {
@@ -17,18 +16,18 @@ public class Song implements Writable {
         this.artist = artist;
     }
 
-    // EFFECTS: returns title of song
+    // EFFECTS: Returns title of song
     public String getTitle() {
         return title;
     }
 
-    // EFFECTS: returns artist of song
+    // EFFECTS: Returns artist of song
     public String getArtist() {
         return artist;
     }
 
 
-    //EFFECTS: returns a string representation of song title, artist, and duration
+    //EFFECTS: Returns a string representation of song title, artist, and duration
     @Override
     public String toString() {
         return "Song{"
@@ -40,6 +39,7 @@ public class Song implements Writable {
                 '}';
     }
 
+    // EFFECTS: Returns song as a JSON object
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

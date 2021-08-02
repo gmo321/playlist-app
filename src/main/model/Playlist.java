@@ -13,6 +13,7 @@ import java.util.List;
 // https://github.students.cs.ubc.ca/CPSC210-2021S-T2/lab5_h5h3b
 // Methods are implemented with reference to IntegerSetIntersect starter, link below:
 // https://github.students.cs.ubc.ca/CPSC210/IntegerSetLecLab
+
 // Represents a Playlist which user can add, remove, play next song, play previous song, replay current song,
 // and display all songs
 
@@ -100,23 +101,23 @@ public class Playlist implements Writable {
         return false;
     }
 
-    // EFFECTS: Returns the current song of playlist starting at index 0
+    // EFFECTS: Returns the current song of playlist, starts at index 0 and increments with playNext() or decrements
+    // with playPrev()
     public Song getCurrentSong() {
-        //(currentSong < playlist.size() && currentSong > 0) {
         return playlist.get(currentSong);
     }
 
-
-    // EFFECTS: returns an unmodifiable list of songs in the playlist
+    // EFFECTS: Returns an unmodifiable list of songs in the playlist
     public List<Song> getSongs() {
         return Collections.unmodifiableList(playlist);
     }
 
+    // EFFECTS: Returns the number of songs in the playlist
     public int numSongs() {
         return playlist.size();
     }
 
-
+    // EFFECTS: Returns playlist as a JSON object
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
@@ -124,7 +125,7 @@ public class Playlist implements Writable {
         return json;
     }
 
-    // EFFECTS: returns songs in this playlist as a JSON array
+    // EFFECTS: Returns songs in this playlist as a JSON array
     private JSONArray playlistToJson() {
         JSONArray jsonArray = new JSONArray();
 

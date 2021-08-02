@@ -4,19 +4,17 @@ import model.Song;
 import model.Playlist;
 import persistence.JsonReader;
 import persistence.JsonWriter;
-//import persistence.JsonReader;
-//import persistence.JsonWriter;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 // UI Functionality and methods are implemented from Teller App. Link below:
 // https://github.students.cs.ubc.ca/CPSC210/TellerApp
+// Methods are implemented with reference to JsonSerializationDemo, link below:
+// https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+
 // Playlist application
 public class PlaylistApp {
     private static final String JSON_STORE = "./data/workroom.json";
@@ -24,7 +22,7 @@ public class PlaylistApp {
     private Song song;
     private Scanner input;
     private JsonWriter jsonWriter;
-    private JsonReader jsonReader; //todo uncomment
+    private JsonReader jsonReader;
 
 
     //EFFECTS: Runs the playlist application
@@ -84,7 +82,7 @@ public class PlaylistApp {
     // EFFECTS: initializes Playlist
     private void initialize() {
         playlist = new Playlist();
-        song = new Song("ABC", "John"); //todo
+        song = new Song("ABC", "John");
         input = new Scanner(System.in);
     }
 
@@ -103,7 +101,7 @@ public class PlaylistApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: Adds the song to the playlist
+    // EFFECTS: Adds song to the playlist
     private void addSongToPlaylist() {
         System.out.println("Enter song name to add: ");
         String title = input.next();
@@ -113,13 +111,12 @@ public class PlaylistApp {
         Song newSong = new Song(title, artist);
         if (playlist.addSong(newSong)) {
             System.out.println(newSong.getTitle() + " by " + newSong.getArtist() + " was added to the playlist.");
-            System.out.println("The current song playing is: " + playlist.getCurrentSong());
+            printCurrentSong();
         } else {
             System.out.println(newSong.getTitle() + " by " + newSong.getArtist() + " is already in playlist...");
         }
     }
 
-    //TODO
     // MODIFIES: this
     // EFFECTS: Removes song from the playlist
     private void removeSongFromPlaylist() {
@@ -131,7 +128,7 @@ public class PlaylistApp {
         Song newSong = new Song(title, artist);
         if (playlist.removeSong(newSong)) {
             System.out.println(newSong.getTitle() + " by " + newSong.getArtist() + " was removed from the playlist.");
-            System.out.println("The current song playing is: " + playlist.getCurrentSong());
+            printCurrentSong();
         } else {
             System.out.println(newSong.getTitle() + " by " + newSong.getArtist() + " is not in the playlist yet...");
         }
@@ -140,7 +137,6 @@ public class PlaylistApp {
     // EFFECTS: Given the current song, plays the next song on playlist
     private void playNextSong() {
         Song newSong = playlist.getCurrentSong();
-        // this.song = newSong;
 
         if (playlist.hasNextSong(newSong)) {
             System.out.println("Now playing " + playlist.playNext());
@@ -169,17 +165,14 @@ public class PlaylistApp {
         }
     }
 
-
     // EFFECTS: Prints out a list of all songs on the playlist
     private void printPlaylist() {
-
         List<Song> songs = playlist.getSongs();
 
         System.out.println("Playlist: ");
         for (Song s : songs) {
             System.out.println(s);
         }
-       // System.out.println("Playlist is empty!");
     }
 
     // EFFECTS: Prints out the current song playing in playlist
@@ -190,7 +183,6 @@ public class PlaylistApp {
             System.out.println("There is no song on the playlist.");
         }
     }
-
 
     // EFFECTS: saves the playlist to file
     private void savePlaylist() {
@@ -203,7 +195,6 @@ public class PlaylistApp {
             System.out.println("Unable to write to file: " + JSON_STORE);
         }
     }
-
 
     // MODIFIES: this
     // EFFECTS: loads playlist from file

@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+// Tests are implemented with reference to JsonSerializationDemo, link below:
+// https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
 
 public class JsonWriterTest extends JsonTest {
 
