@@ -10,5 +10,9 @@
     {
         "artist": "artist3",
         "title": "song3"
+    },
+    {
+        "artist": "artist4",
+        "title": "song4"
     }
 ]}

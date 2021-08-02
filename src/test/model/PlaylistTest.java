@@ -42,9 +42,16 @@ class PlaylistTest {
         assertFalse(testPlaylist.removeSong(s1));
         testPlaylist.addSong(s1);
         testPlaylist.addSong(s2);
+        testPlaylist.addSong(s3);
+        assertFalse(testPlaylist.removeSong(new Song("song2", "artist3")));
+        assertFalse(testPlaylist.removeSong(new Song("song3", "artist4")));
+        assertFalse(testPlaylist.removeSong(new Song("song4", "artist2")));
+        assertTrue(testPlaylist.removeSong(new Song("song1", "artist1")));
+        assertFalse(testPlaylist.isAlreadyInPlaylist(s1));
+        assertFalse(testPlaylist.removeSong(s4));
+        assertFalse(testPlaylist.removeSong(new Song("song5", "artist5")));
         assertTrue(testPlaylist.removeSong(s2));
         assertFalse(testPlaylist.isAlreadyInPlaylist(s2));
-        assertTrue(testPlaylist.isAlreadyInPlaylist(s1));
     }
 
     @Test
@@ -83,6 +90,11 @@ class PlaylistTest {
         assertTrue(testPlaylist.isAlreadyInPlaylist(s2));
         assertTrue(testPlaylist.isAlreadyInPlaylist(s3));
         assertFalse(testPlaylist.isAlreadyInPlaylist(s4));
+        assertTrue(testPlaylist.isAlreadyInPlaylist(new Song("song1", "artist1")));
+        assertFalse(testPlaylist.isAlreadyInPlaylist(new Song("song2", "artist3")));
+        assertFalse(testPlaylist.isAlreadyInPlaylist(new Song("song5", "artist2")));
+        assertFalse(testPlaylist.isAlreadyInPlaylist(new Song("song1", "artist5")));
+        assertFalse(testPlaylist.isAlreadyInPlaylist(new Song("song5", "artist5")));
     }
 
     @Test
@@ -138,5 +150,25 @@ class PlaylistTest {
         testPlaylist.addSong(s2);
         assertEquals(2, testPlaylist.numSongs());
     }
+
+    //@Test
+//    void testToJson() {
+//        testPlaylist.addSong(s1);
+//        testPlaylist.addSong(s2);
+//        assertEquals({
+//                "playlist": {
+//                    "artist": "artist1",
+//                    "title": "song1"
+//        },
+//        {
+//            "artist":"artist2",
+//                "title":"song2"}
+//                }, testPlaylist.toJson());
+//    }
+
+//    @Test
+//    void testPlaylistToJson() {
+//
+//    }
 
 }
