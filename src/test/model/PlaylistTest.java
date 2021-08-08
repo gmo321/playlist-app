@@ -127,7 +127,7 @@ class PlaylistTest {
     }
 
     @Test
-    void testPrintCurrentSong() {
+    void testGetCurrentSong() {
         testPlaylist.addSong(s1);
         testPlaylist.addSong(s2);
         assertEquals(s1, testPlaylist.getCurrentSong());

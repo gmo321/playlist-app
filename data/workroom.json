@@ -4,15 +4,7 @@
         "title": "song1"
     },
     {
-        "artist": "artist2",
-        "title": "song2"
-    },
-    {
         "artist": "artist3",
         "title": "song3"
-    },
-    {
-        "artist": "artist4",
-        "title": "song4"
     }
 ]}

@@ -17,12 +17,12 @@ import java.util.Scanner;
 
 // Playlist application
 public class PlaylistApp {
-    private static final String JSON_STORE = "./data/workroom.json";
+    private static final String JSON_STORE = "./data/playlist.json";
     private Playlist playlist;
     private Song song;
     private Scanner input;
-    private JsonWriter jsonWriter;
-    private JsonReader jsonReader;
+    protected JsonWriter jsonWriter;
+    protected JsonReader jsonReader;
 
 
     //EFFECTS: Runs the playlist application
@@ -185,7 +185,7 @@ public class PlaylistApp {
     }
 
     // EFFECTS: saves the playlist to file
-    private void savePlaylist() {
+    public void savePlaylist() {
         try {
             jsonWriter.open();
             jsonWriter.write(playlist);
@@ -198,7 +198,7 @@ public class PlaylistApp {
 
     // MODIFIES: this
     // EFFECTS: loads playlist from file
-    private void loadPlaylist() {
+    public void loadPlaylist() {
         try {
             playlist = jsonReader.read();
             System.out.println("Loaded " + playlist + " from " + JSON_STORE);

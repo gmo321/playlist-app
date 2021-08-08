@@ -6,7 +6,6 @@ import org.json.JSONObject;
 import persistence.Writable;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 // Methods are implemented with reference to Lab 5, link below:
