@@ -9,26 +9,63 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class SongPanel extends JPanel {
+    private static final String addString = "Add";
+    private static final String removeString = "Remove";
+    private JButton addButton;
+    private JButton removeButton;
+    private JButton shuffleButton;
+    private JList list;
+    private DefaultListModel listModel;
+    private JTextField title;
+    private JTextField artist;
 
     public SongPanel() {
-        JPanel songPanel = new JPanel();
-        FlowLayout layout = new FlowLayout();
-        songPanel.setLayout(layout);
+//        addButton = new JButton(addString);
+//        PlaylistGUI.AddListener addListener = new PlaylistGUI.AddListener(addButton);
+//        addButton.setActionCommand(addString);
+//        addButton.addActionListener(addListener);
+//        addButton.setEnabled(false);
+//
+//        removeButton = new JButton(removeString);
+//        removeButton.setActionCommand(removeString);
+//        removeButton.addActionListener(new PlaylistGUI.RemoveListener());
+//
+//        shuffleButton = new JButton("Shuffle");
+//        shuffleButton.setActionCommand("Shuffle");
+//        shuffleButton.addActionListener(new PlaylistGUI.ShuffleListener());
+//
+//
+//        JLabel songLabel = new JLabel("Enter title");
+//        title = new JTextField(10);
+//        title.addActionListener(addListener);
+//        title.getDocument().addDocumentListener(addListener);
+//        String name = listModel.getElementAt(
+//                list.getSelectedIndex()).toString();
+//
+//
+//        JLabel artistLabel = new JLabel("Enter artist");
+//        artist = new JTextField(10);
+//        artist.addActionListener(addListener);
+//        artist.getDocument().addDocumentListener(addListener);
+//        String aname = listModel.getElementAt(list.getSelectedIndex()).toString();
+//
+//        JPanel buttonPane = new JPanel();
+//        //       buttonPane.setLayout(new GridLayout(2,3));\
+//        buttonPane.setLayout(new BoxLayout(buttonPane,
+//                BoxLayout.LINE_AXIS));
+//        buttonPane.add(songLabel);
+//        buttonPane.add(title);
+//        buttonPane.add(artistLabel);
+//        buttonPane.add(artist);
+//        buttonPane.add(Box.createHorizontalStrut(5));
+//        buttonPane.add(new JSeparator(SwingConstants.VERTICAL));
+//        buttonPane.add(Box.createHorizontalStrut(5));
+//        buttonPane.add(addButton);
+//        buttonPane.add(removeButton);
+//        buttonPane.add(shuffleButton);
+//        buttonPane.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+//    }
 
-        JLabel songLabel = new JLabel("Enter title");
-        JTextField tf = new JTextField(10);
 
-        JLabel artistLabel = new JLabel("Enter artist");
-        JTextField atf = new JTextField(10);
-
-        JButton add = new JButton("Add");
-        JButton remove = new JButton("Remove");
-        songPanel.add(songLabel);
-        songPanel.add(tf);
-        songPanel.add(artistLabel);
-        songPanel.add(atf);
     }
-
-
-
 }

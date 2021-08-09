@@ -40,43 +40,43 @@ public class PlaylistApp {
 
         initialize();
 
-        while (keepGoing) {
-            displayMenu();
-            command = input.next();
-            command = command.toLowerCase();
-
-            if (command.equals("q")) {
-                keepGoing = false;
-            } else {
-                processCommand(command);
-            }
-        }
-        System.out.println("\nGoodbye!");
+//        while (keepGoing) {
+//            displayMenu();
+//            command = input.next();
+//            command = command.toLowerCase();
+//
+//            if (command.equals("q")) {
+//                keepGoing = false;
+//            } else {
+//                processCommand(command);
+//            }
+//        }
+//        System.out.println("\nGoodbye!");
     }
 
     // MODIFIES: this
     // EFFECTS: processes user command
-    private void processCommand(String command) {
-        if (command.equals("a")) {
-            addSongToPlaylist();
-        } else if (command.equals("r")) {
-            removeSongFromPlaylist();
-        } else if (command.equals("n")) {
-            playNextSong();
-        } else if (command.equals("p")) {
-            playPrevSong();
-        } else if (command.equals("replay")) {
-            replaySong();
-        } else if (command.equals("s")) {
-            printPlaylist();
-        } else if (command.equals("save")) {
-            savePlaylist();
-        } else if (command.equals("l")) {
-            loadPlaylist();
-        } else {
-            System.out.println("Please try again");
-        }
-    }
+//    private void processCommand(String command) {
+//        if (command.equals("a")) {
+//            addSongToPlaylist();
+//        } else if (command.equals("r")) {
+//            removeSongFromPlaylist();
+//        } else if (command.equals("n")) {
+//            playNextSong();
+//        } else if (command.equals("p")) {
+//            playPrevSong();
+//        } else if (command.equals("replay")) {
+//            replaySong();
+//        } else if (command.equals("s")) {
+//            printPlaylist();
+//        } else if (command.equals("save")) {
+//            savePlaylist();
+//        } else if (command.equals("l")) {
+//            loadPlaylist();
+//        } else {
+//            System.out.println("Please try again");
+//        }
+//    }
 
     // MODIFIES: this
     // EFFECTS: initializes Playlist
@@ -87,26 +87,28 @@ public class PlaylistApp {
     }
 
     // EFFECTS: Displays menu of options to user
-    private void displayMenu() {
-        System.out.println("\nSelect from:");
-        System.out.println("\ta -> add song");
-        System.out.println("\tr -> remove song");
-        System.out.println("\tn -> play next song");
-        System.out.println("\tp -> play previous song");
-        System.out.println("\treplay -> replay current song");
-        System.out.println("\ts -> show all songs");
-        System.out.println("\tsave -> save playlist to file");
-        System.out.println("\tl -> load playlist from file");
-        System.out.println("\tq -> quit");
-    }
+//    private void displayMenu() {
+//        System.out.println("\nSelect from:");
+//        System.out.println("\ta -> add song");
+//        System.out.println("\tr -> remove song");
+//        System.out.println("\tn -> play next song");
+//        System.out.println("\tp -> play previous song");
+//        System.out.println("\treplay -> replay current song");
+//        System.out.println("\ts -> show all songs");
+//        System.out.println("\tsave -> save playlist to file");
+//        System.out.println("\tl -> load playlist from file");
+//        System.out.println("\tq -> quit");
+//    }
 
     // MODIFIES: this
     // EFFECTS: Adds song to the playlist
-    private void addSongToPlaylist() {
-        System.out.println("Enter song name to add: ");
-        String title = input.next();
-        System.out.println("Enter the artist of the song: ");
-        String artist = input.next();
+    public void addSongToPlaylist() {
+//        System.out.println("Enter song name to add: ");
+//        String title = input.next();
+//        System.out.println("Enter the artist of the song: ");
+//        String artist = input.next();
+        String title = song.getTitle();
+        String artist = song.getArtist();
 
         Song newSong = new Song(title, artist);
         if (playlist.addSong(newSong)) {
@@ -120,10 +122,12 @@ public class PlaylistApp {
     // MODIFIES: this
     // EFFECTS: Removes song from the playlist
     private void removeSongFromPlaylist() {
-        System.out.println("Enter song name to remove: ");
-        String title = input.next();
-        System.out.println("Enter the artist of the song to remove: ");
-        String artist = input.next();
+//        System.out.println("Enter song name to remove: ");
+//        String title = input.next();
+//        System.out.println("Enter the artist of the song to remove: ");
+//        String artist = input.next();
+        String title = new String();
+        String artist = new String();
 
         Song newSong = new Song(title, artist);
         if (playlist.removeSong(newSong)) {
