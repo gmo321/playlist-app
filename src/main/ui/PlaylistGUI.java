@@ -1,40 +1,34 @@
 package ui;
 
-import jdk.nashorn.internal.parser.JSONParser;
 import model.Playlist;
 import model.Song;
-
-
 import java.awt.*;
 import java.awt.event.*;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import javax.swing.*;
 import javax.swing.event.*;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.json.*;
-import org.json.JSONObject;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
+// GUI is implemented with reference to JListDemo, link below:
+//https://docs.oracle.com/javase/tutorial/displayCode.html?code=https://docs.oracle.com/javase/tutorial/uiswing/examples
+// /components/ListDemoProject/src/components/ListDemo.java
+// JMenuBar is implemented with reference to example, link below:
+// https://www.guru99.com/java-swing-gui.html#9
+// shuffleButton.AddActionListener is implemented with reference to example, link below:
+// https://stackoverflow.com/questions/17064599/shuffle-defaultlistmodel
+
 public class PlaylistGUI extends JPanel implements ListSelectionListener {
 
-    private static final int WIDTH = 540;
-    private static final int HEIGHT = 450;
     private Playlist playlist = new Playlist();
     private Song song;
     private JList list;
+    private JPanel buttonPane = new JPanel();
     private DefaultListModel listModel;
     protected JsonWriter jsonWriter = new JsonWriter(JSON_STORE);
     protected JsonReader jsonReader = new JsonReader(JSON_STORE);
     private static final String JSON_STORE = "./data/playlist.json";
-
-
     private static final String addString = "Add";
     private static final String removeString = "Remove";
     private JButton addButton;
@@ -44,8 +38,8 @@ public class PlaylistGUI extends JPanel implements ListSelectionListener {
     private JTextField artist;
     private String song1 = "Hello";
     private String artist1 = "Adele";
-    private String song2 = "Lovesick Girls";
-    private String artist2 = "Blackpink";
+    private String song2 = "305";
+    private String artist2 = "Shawn Mendes";
     private String song3 = "Good Days";
     private String artist3 = "SZA";
 
@@ -53,12 +47,12 @@ public class PlaylistGUI extends JPanel implements ListSelectionListener {
     public PlaylistGUI() {
         super(new BorderLayout());
 
-
         listModel = new DefaultListModel();
+
+        // Adds default 3 items to JList
         listModel.addElement(song1 + " by " + artist1);
         listModel.addElement(song2 + " by " + artist2);
         listModel.addElement(song3 + " by " + artist3);
-
 
         Song songOne = new Song(song1, artist1);
         playlist.addSong(songOne);
@@ -68,7 +62,7 @@ public class PlaylistGUI extends JPanel implements ListSelectionListener {
         playlist.addSong(songThree);
 
 
-
+        // Initializes JList
         list = new JList(listModel);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         list.setSelectedIndex(0);
@@ -77,21 +71,26 @@ public class PlaylistGUI extends JPanel implements ListSelectionListener {
         JScrollPane listScrollPane = new JScrollPane(list);
 
 
+        // Initializes addButton
         addButton = new JButton(addString);
         AddListener addListener = new AddListener(addButton);
         addButton.setActionCommand(addString);
         addButton.addActionListener(addListener);
         addButton.setEnabled(false);
 
+        // Initializes removeButton
         removeButton = new JButton(removeString);
         removeButton.setActionCommand(removeString);
         removeButton.addActionListener(new RemoveListener());
+        removeButton.setEnabled(false);
 
+        // Initializes shuffleButton
         shuffleButton = new JButton("Shuffle");
         shuffleButton.setActionCommand("Shuffle");
         shuffleButton.addActionListener(new ShuffleListener());
 
 
+        // Creates label and text field for entering song title
         JLabel songLabel = new JLabel("Enter title");
         title = new JTextField(10);
         title.addActionListener(addListener);
@@ -100,6 +99,7 @@ public class PlaylistGUI extends JPanel implements ListSelectionListener {
                 list.getSelectedIndex()).toString();
 
 
+        // Creates label and text field for entering artist
         JLabel artistLabel = new JLabel("Enter artist");
         artist = new JTextField(10);
         artist.addActionListener(addListener);
@@ -110,7 +110,7 @@ public class PlaylistGUI extends JPanel implements ListSelectionListener {
         //  JLabel currentSongLabel = new JLabel("Current song playing: ");
 
 
-        //Creating the MenuBar and adding components
+        // Creating the MenuBar and adding Open and Save components
         JMenuBar mb = new JMenuBar();
         JMenu fileMenu = new JMenu("File");
         mb.add(fileMenu);
@@ -118,6 +118,7 @@ public class PlaylistGUI extends JPanel implements ListSelectionListener {
         JMenuItem saveButton = new JMenuItem("Save");
 
 
+        // REQUIRES: playlist.json file
         // EFFECTS: Loads the playlist from JSON file and updates the GUI with that playlist
         // MODIFIES: this
         openButton.addActionListener(new ActionListener() {
@@ -130,12 +131,12 @@ public class PlaylistGUI extends JPanel implements ListSelectionListener {
                         listModel.addElement(playlistSong.getTitle() + " by " + playlistSong.getArtist());
                     }
                 } catch (IOException ioException) {
-                    ioException.printStackTrace();
+                    System.out.println("Unable to read from file: " + JSON_STORE);
                 }
             }
         });
 
-
+        // REQUIRES: Playlist is not empty
         // EFFECTS: Saves the playlist to JSON file
         saveButton.addActionListener(new ActionListener() {
             @Override
@@ -145,20 +146,17 @@ public class PlaylistGUI extends JPanel implements ListSelectionListener {
                     jsonWriter.write(playlist);
                     jsonWriter.close();
                 } catch (FileNotFoundException exception) {
-                    exception.printStackTrace();
+                    System.out.println("Unable to write to file: " + JSON_STORE);
                 }
             }
             });
 
-        fileMenu.add(openButton);
-        fileMenu.add(saveButton);
-
+        // Initializes button panel
         JPanel buttonPane = new JPanel();
         buttonPane.setLayout(new BorderLayout());
-        //       buttonPane.setLayout(new GridLayout(2,3));\
-
 
         buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.LINE_AXIS));
+        buttonPane.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         buttonPane.add(songLabel);
         buttonPane.add(title);
         buttonPane.add(artistLabel);
@@ -170,9 +168,8 @@ public class PlaylistGUI extends JPanel implements ListSelectionListener {
         buttonPane.add(new JSeparator(SwingConstants.VERTICAL));
         buttonPane.add(Box.createHorizontalStrut(5));
 
-
-        buttonPane.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-
+        fileMenu.add(openButton);
+        fileMenu.add(saveButton);
 
         //  JPanel currentSongPanel = new JPanel();
         //  currentSongPanel.add(currentSongLabel);
@@ -182,13 +179,14 @@ public class PlaylistGUI extends JPanel implements ListSelectionListener {
         add(buttonPane, BorderLayout.PAGE_END);
         add(mb, BorderLayout.NORTH);
 
-
     }
 
 
     //todo figure out how to connect this with my playlistapp methods
-    //todo song and artist dupes not working
 
+    // REQUIRES: Songs to be in playlist
+    // EFFECTS: Removes mouse's currently selected song from playlist
+    // MODIFIES: this
     class RemoveListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             //This method can be called only if
@@ -230,6 +228,9 @@ public class PlaylistGUI extends JPanel implements ListSelectionListener {
         }
     }
 
+    // REQUIRES: Songs to be in playlist
+    // EFFECTS: Adds songs to playlist; if mouse is currently selecting song, adds song after that selected song
+    // MODIFIES: this
     class AddListener implements ActionListener, DocumentListener {
         private boolean alreadyEnabled = false;
         private JButton button;
@@ -243,22 +244,33 @@ public class PlaylistGUI extends JPanel implements ListSelectionListener {
             String songName = title.getText();
             String artistName = artist.getText();
 
-
-            //User didn't type in a unique name...
-            if (songName.equals("") || artistName.equals("")
-                    || alreadyInList(songName, artistName)) {
+            // User didn't type in a name
+            if (songName.equals("")) {
                 Toolkit.getDefaultToolkit().beep();
                 title.requestFocusInWindow();
                 title.selectAll();
+                return;
+            }
+
+            // User didn't type in an artist
+            if (artistName.equals("")) {
+                Toolkit.getDefaultToolkit().beep();
                 artist.requestFocusInWindow();
                 artist.selectAll();
                 return;
             }
 
+            // User didn't type in a unique song
+            if (alreadyInList(songName, artistName)) {
+                Toolkit.getDefaultToolkit().beep();
+                title.requestFocusInWindow();
+                artist.requestFocusInWindow();
+                title.selectAll();
+                artist.selectAll();
+                return;
+            }
 
-            //plays beep when song + artist added
-            //Toolkit.getDefaultToolkit().beep();
-
+            // Inserts song in listModel
             int index = list.getSelectedIndex(); //get selected index
             if (index == -1) { //no selection, so insert at beginning
                 index = 0;
@@ -268,44 +280,46 @@ public class PlaylistGUI extends JPanel implements ListSelectionListener {
 
             listModel.insertElementAt(title.getText() + " by " + artist.getText(), index);
 
+            // Adds songs to playlist object
             Song song = new Song(title.getText(), artist.getText());
-
             playlist.addSong(song);
             System.out.println(playlist.getSongs());
 
-
-            //If we just wanted to add to the end, we'd do this:
-            //listModel.addElement(title.getText());
-
-
-            //Reset the text field.
+            // Reset the title text field.
             title.requestFocusInWindow();
             title.setText("");
 
-            //Reset the text field.
+            // Reset the artist text field.
             artist.requestFocusInWindow();
             artist.setText("");
 
-            //Select the new item and make it visible.
+            // Select the new item and make it visible.
             list.setSelectedIndex(index);
             list.ensureIndexIsVisible(index);
         }
 
-        //TODO not working properly
+
+        // EFFECTS: Returns true if song name and artist name are already in listModel
         protected boolean alreadyInList(String songName, String artistName) {
-            return listModel.contains(songName) && listModel.contains(artistName);
+            return (listModel.contains(songName + " by " + artistName));
         }
 
+        //Required by DocumentListener.
+        // EFFECTS: update for when there is an input, addButton is enabled
         @Override
         public void insertUpdate(DocumentEvent e) {
             enableButton();
         }
 
+        //Required by DocumentListener.
+        // EFFECTS: Update for when there is no inputs
         @Override
         public void removeUpdate(DocumentEvent e) {
             handleEmptyTextField(e);
         }
 
+        //Required by DocumentListener.
+        // EFFECTS: If text is not empty, enable the addButton
         @Override
         public void changedUpdate(DocumentEvent e) {
             if (!handleEmptyTextField(e)) {
@@ -313,12 +327,14 @@ public class PlaylistGUI extends JPanel implements ListSelectionListener {
             }
         }
 
+        // EFFECTS: Enables the addButton
         private void enableButton() {
             if (!alreadyEnabled) {
                 button.setEnabled(true);
             }
         }
 
+        // EFFECTS: if user has not inputted anything, set buttons to false
         private boolean handleEmptyTextField(DocumentEvent e) {
             if (e.getDocument().getLength() <= 0) {
                 button.setEnabled(false);
@@ -330,47 +346,19 @@ public class PlaylistGUI extends JPanel implements ListSelectionListener {
     }
 
 
+    // EFFECTS: If no more events are happening, if there is no selection of element, disable remove button
+    // else if there is a selection, enable to remove button
     @Override
     public void valueChanged(ListSelectionEvent e) {
         if (e.getValueIsAdjusting() == false) {
-
             if (list.getSelectedIndex() == -1) {
-                //No selection, disable fire button.
+                //No selection, disable remove button.
                 removeButton.setEnabled(false);
-
             } else {
-                //Selection, enable the fire button.
+                //Selection, enable the remove button.
                 removeButton.setEnabled(true);
             }
         }
-    }
-
-    public static void actualGUI() {
-
-        JFrame frame = new JFrame("Playlist Application");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(WIDTH, HEIGHT);
-        // JButton button = new JButton("Press");
-        //  frame.getContentPane().add(button); // Adds Button to content pane of frame
-
-
-        //Create and set up the content pane.
-        JComponent newContentPane = new PlaylistGUI();
-        newContentPane.setOpaque(true); //content panes must be opaque
-        frame.setContentPane(newContentPane);
-
-        //Display the window.
-        frame.setVisible(true);
-    }
-
-    public static void main(String[] args) {
-        //Schedule a job for the event-dispatching thread:
-        //creating and showing this application's GUI.
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                actualGUI();
-            }
-        });
     }
 }
 
