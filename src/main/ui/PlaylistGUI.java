@@ -157,6 +157,7 @@ public class PlaylistGUI extends JPanel implements ListSelectionListener {
         removeButton.addActionListener(new RemoveListener());
         removeButton.setEnabled(false);
     }
+
     // EFFECTS: Initializes add button
     private AddListener initAddButton() {
         addButton = new JButton(addString);
