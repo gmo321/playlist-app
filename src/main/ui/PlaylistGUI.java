@@ -44,6 +44,7 @@ public class PlaylistGUI extends JPanel implements ListSelectionListener {
     private String song3 = "Good Days";
     private String artist3 = "SZA";
 
+    // Constructs a GUI for a playlist application
     public PlaylistGUI() {
         super(new BorderLayout());
         listModel = new DefaultListModel();
@@ -71,24 +72,30 @@ public class PlaylistGUI extends JPanel implements ListSelectionListener {
         initPanel(listScrollPane, songLabel, artistLabel, mb, fileMenu, openButton, saveButton);
     }
 
+    // EFFECTS: Initializes artist text field
     private void initArtistField(AddListener addListener) {
         artist = new JTextField(10);
         artist.addActionListener(addListener);
         artist.getDocument().addDocumentListener(addListener);
     }
 
+    // EFFECTS: Initializes title text field
     private void initTitleField(AddListener addListener) {
         title = new JTextField(10);
         title.addActionListener(addListener);
         title.getDocument().addDocumentListener(addListener);
     }
 
+    // EFFECTS: Adds default songs to listModel
+    // MODIFIES: this
     private void addSongs() {
         listModel.addElement(song1 + " by " + artist1);
         listModel.addElement(song2 + " by " + artist2);
         listModel.addElement(song3 + " by " + artist3);
     }
 
+
+    // EFFECTS: Initializes button panel with text fields and buttons
     private void initPanel(JScrollPane listScrollPane, JLabel songLabel, JLabel artistLabel,
                            JMenuBar mb, JMenu fileMenu, JMenuItem openButton, JMenuItem saveButton) {
         JPanel buttonPane = new JPanel();
@@ -136,19 +143,21 @@ public class PlaylistGUI extends JPanel implements ListSelectionListener {
         }
     }
 
+    // EFFECTS: Initializes shuffle button
     private void initShuffleButton() {
         shuffleButton = new JButton("Shuffle");
         shuffleButton.setActionCommand("Shuffle");
         shuffleButton.addActionListener(new ShuffleListener());
     }
 
+    // EFFECTS: Initializes remove button
     private void initRemoveButton() {
         removeButton = new JButton(removeString);
         removeButton.setActionCommand(removeString);
         removeButton.addActionListener(new RemoveListener());
         removeButton.setEnabled(false);
     }
-
+    // EFFECTS: Initializes add button
     private AddListener initAddButton() {
         addButton = new JButton(addString);
         AddListener addListener = new AddListener(addButton);
@@ -158,6 +167,7 @@ public class PlaylistGUI extends JPanel implements ListSelectionListener {
         return addListener;
     }
 
+    // Initializes JList listModel
     private void initJlist() {
         list = new JList(listModel);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -166,6 +176,8 @@ public class PlaylistGUI extends JPanel implements ListSelectionListener {
         list.setVisibleRowCount(5);
     }
 
+    // REQUIRES: Playlist is not empty
+    // EFFECTS: Saves the playlist to JSON file
     private void saveButtonListener() {
         try {
             jsonWriter.open();
@@ -176,6 +188,9 @@ public class PlaylistGUI extends JPanel implements ListSelectionListener {
         }
     }
 
+    // REQUIRES: playlist.json file
+    // EFFECTS: Loads the playlist from JSON file and updates the GUI with that playlist
+    // MODIFIES: this
     private void openButtonListener() {
         try {
             playlist = jsonReader.read();
@@ -188,6 +203,8 @@ public class PlaylistGUI extends JPanel implements ListSelectionListener {
         }
     }
 
+    // EFFECTS: Creates 3 default song objects to be added to listModel and playlist
+    // MODIFIES: this
     private void createSongs() {
         Song songOne = new Song(song1, artist1);
         playlist.addSong(songOne);
@@ -294,7 +311,9 @@ public class PlaylistGUI extends JPanel implements ListSelectionListener {
             list.ensureIndexIsVisible(index);
         }
 
-        // EFFECTS: Returns true if user song and artist are already in playlist
+        // REQUIRES: Song and artist to be in playlist
+        // EFFECTS: Returns true if user song and artist are already in listModel, a sound is played and title and
+        // artist textboxes are highlighted
         private boolean notUniqueSong(String songName, String artistName) {
             if (alreadyInList(songName, artistName)) {
                 Toolkit.getDefaultToolkit().beep();
@@ -307,6 +326,7 @@ public class PlaylistGUI extends JPanel implements ListSelectionListener {
             return false;
         }
 
+        // REQUIRES: Song and artist to be in playlist
         // EFFECTS: Returns true if song name and artist name are already in listModel
         protected boolean alreadyInList(String songName, String artistName) {
             return (listModel.contains(songName + " by " + artistName));
@@ -350,6 +370,7 @@ public class PlaylistGUI extends JPanel implements ListSelectionListener {
         }
     }
 
+    // EFFECTS: Resets the title text field
     private void resetTitleTextField(JTextField title) {
         title.requestFocusInWindow();
         title.setText("");
