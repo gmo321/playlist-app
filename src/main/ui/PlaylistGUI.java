@@ -21,6 +21,8 @@ import persistence.JsonWriter;
 // shuffleButton.AddActionListener is implemented with reference to example, link below:
 // https://stackoverflow.com/questions/17064599/shuffle-defaultlistmodel
 
+// Represents a Playlist application which has the functions of adding, removing, shuffling songs,
+// and saving and loading playlists
 public class PlaylistGUI extends JPanel implements ListSelectionListener {
     private Playlist playlist = new Playlist();
     private Song song;
