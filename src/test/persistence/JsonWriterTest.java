@@ -1,5 +1,6 @@
 package persistence;
 
+import exceptions.SongAlreadyInPlaylistException;
 import model.Playlist;
 import model.Song;
 import org.junit.jupiter.api.Test;
@@ -26,7 +27,7 @@ public class JsonWriterTest extends JsonTest {
     }
 
     @Test
-    void testWriterEmptyPlaylist() {
+    void testWriterEmptyPlaylist() throws SongAlreadyInPlaylistException {
         try {
             Playlist pl = new Playlist();
             JsonWriter writer = new JsonWriter("./data/testWriterEmptyPlaylist.json");
@@ -43,7 +44,7 @@ public class JsonWriterTest extends JsonTest {
     }
 
     @Test
-    void testWriterGeneralPlaylist() {
+    void testWriterGeneralPlaylist() throws SongAlreadyInPlaylistException {
         try {
             Playlist pl = new Playlist();
             pl.addSong(new Song("song2", "artist2"));

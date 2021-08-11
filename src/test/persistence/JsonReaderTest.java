@@ -1,5 +1,6 @@
 package persistence;
 
+import exceptions.SongAlreadyInPlaylistException;
 import model.Playlist;
 import model.Song;
 import org.junit.jupiter.api.Test;
@@ -15,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 class JsonReaderTest extends JsonTest {
 
     @Test
-    void testReaderNonExistentFile() {
+    void testReaderNonExistentFile() throws SongAlreadyInPlaylistException {
         JsonReader reader = new JsonReader("./data/noSuchFile.json");
         try {
             Playlist pl = reader.read();
@@ -26,7 +27,7 @@ class JsonReaderTest extends JsonTest {
     }
 
     @Test
-    void testReaderEmptyPlaylist() {
+    void testReaderEmptyPlaylist() throws SongAlreadyInPlaylistException {
         JsonReader reader = new JsonReader("./data/testReaderEmptyPlaylist.json");
         try {
             Playlist pl = reader.read();
@@ -37,7 +38,7 @@ class JsonReaderTest extends JsonTest {
     }
 
     @Test
-    void testReaderGeneralPlaylist() {
+    void testReaderGeneralPlaylist() throws SongAlreadyInPlaylistException {
         JsonReader reader = new JsonReader("./data/testReaderGeneralPlaylist.json");
         try {
             Playlist pl = reader.read();

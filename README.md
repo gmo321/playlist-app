@@ -27,3 +27,9 @@ about to accomplish!
 - As a user, I want to be able to save my playlist to file
 - As a user, I want to be able to load my playlist from file
 - As a user, I want to be able to shuffle the songs in my playlist
+
+## Phase 4: Task 2
+- Tested and designed Playlist and PlaylistApp classes to be robust. 
+- The methods used were:
+- In Playlist class: addSong(), removeSong(), playNext(), playPrev(), replay(), getCurrentSong(),
+- In PlaylistApp class: PlaylistApp(), addSongToPlaylist(), removeSongFromPlaylist(), playNextSong(), playPrevSong()

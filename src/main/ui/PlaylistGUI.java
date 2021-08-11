@@ -1,5 +1,6 @@
 package ui;
 
+import exceptions.SongAlreadyInPlaylistException;
 import model.Playlist;
 import model.Song;
 
@@ -47,7 +48,7 @@ public class PlaylistGUI extends JPanel implements ListSelectionListener {
     private String artist3 = "SZA";
 
     // Constructs a GUI for a playlist application
-    public PlaylistGUI() {
+    public PlaylistGUI() throws SongAlreadyInPlaylistException {
         super(new BorderLayout());
         listModel = new DefaultListModel();
         addSongs();
@@ -132,7 +133,11 @@ public class PlaylistGUI extends JPanel implements ListSelectionListener {
     class OpenButton implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            openButtonListener();
+            try {
+                openButtonListener();
+            } catch (SongAlreadyInPlaylistException songAlreadyInPlaylistException) {
+                songAlreadyInPlaylistException.printStackTrace();
+            }
         }
     }
 
@@ -194,7 +199,7 @@ public class PlaylistGUI extends JPanel implements ListSelectionListener {
     // REQUIRES: playlist.json file
     // EFFECTS: Loads the playlist from JSON file and updates the GUI with that playlist
     // MODIFIES: this
-    private void openButtonListener() {
+    private void openButtonListener() throws SongAlreadyInPlaylistException {
         try {
             playlist = jsonReader.read();
             listModel.clear();
@@ -208,7 +213,7 @@ public class PlaylistGUI extends JPanel implements ListSelectionListener {
 
     // EFFECTS: Creates 3 default song objects to be added to listModel and playlist
     // MODIFIES: this
-    private void createSongs() {
+    private void createSongs() throws SongAlreadyInPlaylistException {
         Song songOne = new Song(song1, artist1);
         playlist.addSong(songOne);
         Song songTwo = new Song(song2, artist2);
@@ -276,32 +281,28 @@ public class PlaylistGUI extends JPanel implements ListSelectionListener {
             String songName = title.getText();
             String artistName = artist.getText();
 
-            // User didn't type in a name
-            if (noInput(songName, title)) {
+            if (noInput(songName, title)) { // User didn't type in a name
                 return;
             }
 
-            // User didn't type in an artist
-            if (noInput(artistName, artist)) {
+            if (noInput(artistName, artist)) { // User didn't type in an artist
                 return;
             }
 
-            // User didn't type in a unique song
-            if (notUniqueSong(songName, artistName)) {
+            if (notUniqueSong(songName, artistName)) { // User didn't type in a unique song
                 return;
             }
 
             // Inserts song in listModel
-            int index = list.getSelectedIndex(); //get selected index
-            if (index == -1) { //no selection, so insert at beginning
-                index = 0;
-            } else {           //add after the selected item
-                index++;
-            }
+            int index = addSongToList();
 
             listModel.insertElementAt(title.getText() + " by " + artist.getText(), index);
 
-            addSongsToPlaylist();
+            try {
+                addSongsToPlaylist();
+            } catch (SongAlreadyInPlaylistException songE) {
+                System.out.println("This song is already in the playlist");
+            }
 
             // Reset the title text field.
             resetTitleTextField(title);
@@ -316,7 +317,7 @@ public class PlaylistGUI extends JPanel implements ListSelectionListener {
 
         // REQUIRES: Song and artist to be in playlist
         // EFFECTS: Returns true if user song and artist are already in listModel, a sound is played and title and
-        // artist textboxes are highlighted
+        // artist text fields are highlighted
         private boolean notUniqueSong(String songName, String artistName) {
             if (alreadyInList(songName, artistName)) {
                 Toolkit.getDefaultToolkit().beep();
@@ -329,7 +330,6 @@ public class PlaylistGUI extends JPanel implements ListSelectionListener {
             return false;
         }
 
-        // REQUIRES: Song and artist to be in playlist
         // EFFECTS: Returns true if song name and artist name are already in listModel
         protected boolean alreadyInList(String songName, String artistName) {
             return (listModel.contains(songName + " by " + artistName));
@@ -373,6 +373,17 @@ public class PlaylistGUI extends JPanel implements ListSelectionListener {
         }
     }
 
+    // EFFECTS: Adds song to listModel, if cursor selects an index, insert song after selected item
+    private int addSongToList() {
+        int index = list.getSelectedIndex(); //get selected index
+        if (index == -1) { //no selection, so insert at beginning
+            index = 0;
+        } else {           //add after the selected item
+            index++;
+        }
+        return index;
+    }
+
     // EFFECTS: Resets the title text field
     private void resetTitleTextField(JTextField title) {
         title.requestFocusInWindow();
@@ -392,7 +403,7 @@ public class PlaylistGUI extends JPanel implements ListSelectionListener {
 
     // EFFECTS: Adds songs to playlist object whenever user adds to listModel
     // MODIFIES: this
-    private void addSongsToPlaylist() {
+    private void addSongsToPlaylist() throws SongAlreadyInPlaylistException {
         Song song = new Song(title.getText(), artist.getText());
         playlist.addSong(song);
         System.out.println(playlist.getSongs());

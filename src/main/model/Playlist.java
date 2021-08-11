@@ -1,6 +1,7 @@
 package model;
 
 
+import exceptions.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.Writable;
@@ -15,7 +16,6 @@ import java.util.List;
 
 // Represents a Playlist which user can add, remove, play next song, play previous song, replay current song,
 // and display all songs
-
 public class Playlist implements Writable {
     private List<Song> playlist;
     private int currentSong;
@@ -29,45 +29,58 @@ public class Playlist implements Writable {
 
     // MODIFIES: this
     // EFFECTS: If song is not already in playlist, add song to end of playlist and return true, false otherwise
-    public boolean addSong(Song song) {
-        if (!isAlreadyInPlaylist(song)) {
+    // throws SongAlreadyInPlaylistException if song is already in playlist
+    public boolean addSong(Song song) throws SongAlreadyInPlaylistException {
+        if (isAlreadyInPlaylist(song)) {
+            throw new SongAlreadyInPlaylistException();
+        } else {
             playlist.add(song);
             return true;
-        } else {
-            return false;
         }
     }
 
     // MODIFIES: this
     // EFFECTS: If song is already in playlist, remove song from playlist and return true, false otherwise
-    public boolean removeSong(Song song) {
-        for (int i = 0; i < playlist.size(); i++) {
-            if (playlist.get(i).getTitle().equals(song.getTitle())
-                    && playlist.get(i).getArtist().equals(song.getArtist())) {
-                playlist.remove(i);
-                return true;
-            }
+    // throws SongNotInPlaylistException if song is not in playlist yet
+    public boolean removeSong(Song song) throws SongNotInPlaylistException {
+        if (!isAlreadyInPlaylist(song)) {
+            throw new SongNotInPlaylistException();
+        } else {
+//            for (int i = 0; i < playlist.size(); i++) {
+//                if (playlist.get(i).getTitle().equals(song.getTitle())
+//                        && playlist.get(i).getArtist().equals(song.getArtist())) {
+            playlist.remove(song);
+            return true;
         }
-        return false;
     }
 
-    // REQUIRES: Song after current song
+
     // EFFECTS: Plays next song on playlist
-    public Song playNext() {
+    // throws NoNextSongException if current song has no song after
+    public Song playNext() throws NoNextSongException, NoSongInPlaylistException {
+        if (!hasNextSong(getCurrentSong())) {
+            throw new NoNextSongException();
+        }
         this.currentSong++;
         return playlist.get(currentSong);
     }
 
-    // REQUIRES: Song before current song
     // EFFECTS: Plays previous song on playlist
-    public Song playPrev() {
+    // throws NoPreviousSongException if current song has no song before
+    public Song playPrev() throws NoPreviousSongException, NoSongInPlaylistException {
+        if (!hasPrevSong(getCurrentSong())) {
+            throw new NoPreviousSongException();
+        }
         this.currentSong--;
         return playlist.get(currentSong);
     }
 
-    // REQUIRES: Song in playlist
     // EFFECTS: Replays current song on playlist
-    public Song replay() {
+    // throws NoSongInPlaylistException if the playlist is empty
+    public Song replay() throws NoSongInPlaylistException {
+        if (playlist.isEmpty()) {
+            throw new NoSongInPlaylistException();
+        }
         return playlist.get(currentSong);
     }
 
@@ -82,6 +95,7 @@ public class Playlist implements Writable {
         return false;
     }
 
+    //
     // EFFECTS: Returns true if playlist is empty, false otherwise
     public boolean isEmpty() {
         return playlist.isEmpty();
@@ -105,7 +119,10 @@ public class Playlist implements Writable {
 
     // EFFECTS: Returns the current song of playlist, starts at index 0 and increments with playNext() or decrements
     // with playPrev()
-    public Song getCurrentSong() {
+    public Song getCurrentSong() throws NoSongInPlaylistException {
+        if (playlist.isEmpty()) {
+            throw new NoSongInPlaylistException();
+        }
         return playlist.get(currentSong);
     }
 

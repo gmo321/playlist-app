@@ -1,5 +1,7 @@
 package ui;
 
+import exceptions.SongAlreadyInPlaylistException;
+
 import javax.swing.*;
 import java.io.FileNotFoundException;
 
@@ -10,7 +12,12 @@ public class Main {
     public static void main(String[] args) throws FileNotFoundException {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                PlaylistGUI actualGUI = new PlaylistGUI();
+                PlaylistGUI actualGUI = null;
+                try {
+                    actualGUI = new PlaylistGUI();
+                } catch (SongAlreadyInPlaylistException e) {
+                    e.printStackTrace();
+                }
                 JFrame frame = new JFrame("Playlist Application");
                 JPanel buttonPanel = new JPanel();
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
