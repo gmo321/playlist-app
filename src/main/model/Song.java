@@ -4,7 +4,7 @@ import org.json.JSONObject;
 import persistence.Writable;
 
 
-// Represents a song which has a name, artist, and duration
+// Represents a song which has a name and artist
 public class Song implements Writable {
     private String title;              // a song title
     private String artist;             // the artist of the song

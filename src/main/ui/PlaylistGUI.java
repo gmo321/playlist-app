@@ -22,13 +22,13 @@ import persistence.JsonWriter;
 // shuffleButton.AddActionListener is implemented with reference to example, link below:
 // https://stackoverflow.com/questions/17064599/shuffle-defaultlistmodel
 
-// Represents a Playlist application which has the functions of adding, removing, shuffling songs,
+// Represents a Playlist application as GUI which has the functions of adding, removing, shuffling songs,
 // and saving and loading playlists
 public class PlaylistGUI extends JPanel implements ListSelectionListener {
     private Playlist playlist = new Playlist();
     private Song song;
     private JList list;
-    private JPanel buttonPane = new JPanel();
+    private JPanel buttonPane;
     private DefaultListModel listModel;
     protected JsonWriter jsonWriter = new JsonWriter(JSON_STORE);
     protected JsonReader jsonReader = new JsonReader(JSON_STORE);
@@ -53,7 +53,7 @@ public class PlaylistGUI extends JPanel implements ListSelectionListener {
         listModel = new DefaultListModel();
         addSongs();
         createSongs();
-        initJlist();
+        initList();
         JScrollPane listScrollPane = new JScrollPane(list);
         AddListener addListener = initAddButton();
         initRemoveButton();
@@ -61,7 +61,6 @@ public class PlaylistGUI extends JPanel implements ListSelectionListener {
 
         JLabel songLabel = new JLabel("Enter title");
         initTitleField(addListener);
-
         JLabel artistLabel = new JLabel("Enter artist");
         initArtistField(addListener);
 
@@ -69,7 +68,6 @@ public class PlaylistGUI extends JPanel implements ListSelectionListener {
         JMenu fileMenu = new JMenu("File");
         mb.add(fileMenu);
         JMenuItem openButton = new JMenuItem("Open");
-
         JMenuItem saveButton = new JMenuItem("Save");
 
         initPanel(listScrollPane, songLabel, artistLabel, mb, fileMenu, openButton, saveButton);
@@ -101,7 +99,7 @@ public class PlaylistGUI extends JPanel implements ListSelectionListener {
     // EFFECTS: Initializes button panel with text fields and buttons
     private void initPanel(JScrollPane listScrollPane, JLabel songLabel, JLabel artistLabel,
                            JMenuBar mb, JMenu fileMenu, JMenuItem openButton, JMenuItem saveButton) {
-        JPanel buttonPane = new JPanel();
+        buttonPane = new JPanel();
         buttonPane.setLayout(new BorderLayout());
 
         buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.LINE_AXIS));
@@ -176,7 +174,7 @@ public class PlaylistGUI extends JPanel implements ListSelectionListener {
     }
 
     // Initializes JList listModel
-    private void initJlist() {
+    private void initList() {
         list = new JList(listModel);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         list.setSelectedIndex(0);
@@ -184,7 +182,6 @@ public class PlaylistGUI extends JPanel implements ListSelectionListener {
         list.setVisibleRowCount(5);
     }
 
-    // REQUIRES: Playlist is not empty
     // EFFECTS: Saves the playlist to JSON file
     private void saveButtonListener() {
         try {
@@ -196,7 +193,6 @@ public class PlaylistGUI extends JPanel implements ListSelectionListener {
         }
     }
 
-    // REQUIRES: playlist.json file
     // EFFECTS: Loads the playlist from JSON file and updates the GUI with that playlist
     // MODIFIES: this
     private void openButtonListener() throws SongAlreadyInPlaylistException {
@@ -266,7 +262,6 @@ public class PlaylistGUI extends JPanel implements ListSelectionListener {
         }
     }
 
-    // REQUIRES: Songs to be in playlist
     // EFFECTS: Adds songs to playlist; if mouse is currently selecting song, adds song after that selected song
     // MODIFIES: this
     class AddListener implements ActionListener, DocumentListener {
@@ -374,6 +369,7 @@ public class PlaylistGUI extends JPanel implements ListSelectionListener {
     }
 
     // EFFECTS: Adds song to listModel, if cursor selects an index, insert song after selected item
+    // MODIFIES: this
     private int addSongToList() {
         int index = list.getSelectedIndex(); //get selected index
         if (index == -1) { //no selection, so insert at beginning
@@ -404,7 +400,7 @@ public class PlaylistGUI extends JPanel implements ListSelectionListener {
     // EFFECTS: Adds songs to playlist object whenever user adds to listModel
     // MODIFIES: this
     private void addSongsToPlaylist() throws SongAlreadyInPlaylistException {
-        Song song = new Song(title.getText(), artist.getText());
+        song = new Song(title.getText(), artist.getText());
         playlist.addSong(song);
         System.out.println(playlist.getSongs());
     }

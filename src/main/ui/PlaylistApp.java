@@ -25,7 +25,6 @@ public class PlaylistApp {
     protected JsonWriter jsonWriter;
     protected JsonReader jsonReader;
 
-//todo which methods are robust? any that throws
     //EFFECTS: Runs the playlist application
     public PlaylistApp() throws FileNotFoundException, SongAlreadyInPlaylistException, NoSongInPlaylistException {
         jsonWriter = new JsonWriter(JSON_STORE);
@@ -83,7 +82,7 @@ public class PlaylistApp {
     // EFFECTS: initializes Playlist
     private void initialize() {
         playlist = new Playlist();
-        song = new Song("ABC", "John");
+        song = new Song(song.getTitle(), song.getArtist());
         input = new Scanner(System.in);
     }
 
@@ -156,7 +155,6 @@ public class PlaylistApp {
         }
     }
 
-    // REQUIRES: Has previous song
     // EFFECTS: Given the current song, plays the previous song on playlist
     private void playPrevSong() throws NoSongInPlaylistException {
         Song newSong = playlist.getCurrentSong();

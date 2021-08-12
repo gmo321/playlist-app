@@ -29,7 +29,14 @@ about to accomplish!
 - As a user, I want to be able to shuffle the songs in my playlist
 
 ## Phase 4: Task 2
-- Tested and designed Playlist and PlaylistApp classes to be robust. 
-- The methods used were:
-- In Playlist class: addSong(), removeSong(), playNext(), playPrev(), replay(), getCurrentSong(),
-- In PlaylistApp class: PlaylistApp(), addSongToPlaylist(), removeSongFromPlaylist(), playNextSong(), playPrevSong()
+- I tested and designed Playlist and PlaylistApp classes to be robust. 
+- The methods involved were:
+- In Playlist class: addSong(), removeSong(), playNext(), playPrev(), replay(), getCurrentSong()
+- In PlaylistApp class: addSongToPlaylist(), removeSongFromPlaylist(), playNextSong(), playPrevSong(), 
+printCurrentSong()
+
+## Phase 4: Task 3
+- If I had more time, I would definitely refactor my PlaylistGUI class as the class does not follow the Single 
+Responsibility Principle. For example, I would have split up the different GUI components such as the JPanel and
+JMenuBar components. There also appears to be duplicate code which would require refactoring as well to prevent 
+coupling.

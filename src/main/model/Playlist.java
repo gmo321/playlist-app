@@ -46,9 +46,6 @@ public class Playlist implements Writable {
         if (!isAlreadyInPlaylist(song)) {
             throw new SongNotInPlaylistException();
         } else {
-//            for (int i = 0; i < playlist.size(); i++) {
-//                if (playlist.get(i).getTitle().equals(song.getTitle())
-//                        && playlist.get(i).getArtist().equals(song.getArtist())) {
             playlist.remove(song);
             return true;
         }
