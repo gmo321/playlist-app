@@ -29,6 +29,7 @@ public class PlaylistGUI extends JPanel implements ListSelectionListener {
     private Song song;
     private JList list;
     private JPanel buttonPane;
+    private JPanel newPane;
     private DefaultListModel listModel;
     protected JsonWriter jsonWriter = new JsonWriter(JSON_STORE);
     protected JsonReader jsonReader = new JsonReader(JSON_STORE);
@@ -108,12 +109,13 @@ public class PlaylistGUI extends JPanel implements ListSelectionListener {
         buttonPane.add(title);
         buttonPane.add(artistLabel);
         buttonPane.add(artist);
-        buttonPane.add(addButton);
-        buttonPane.add(removeButton);
-        buttonPane.add(shuffleButton);
         buttonPane.add(Box.createHorizontalStrut(5));
         buttonPane.add(new JSeparator(SwingConstants.VERTICAL));
         buttonPane.add(Box.createHorizontalStrut(5));
+        buttonPane.add(addButton);
+        buttonPane.add(removeButton);
+        buttonPane.add(shuffleButton);
+
 
         fileMenu.add(openButton);
         openButton.addActionListener(new OpenButton());
